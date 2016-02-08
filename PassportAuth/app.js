@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var signup = require('./routes/signup');
 
 var app = express();
 
@@ -37,6 +38,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/signup',signup);
+/*app.get('/signup', function (req, res) {
+    res.send('SIGNUP');
+});*/
+
+app.post('/newUser', passport.authenticate('signup', {
+    successRedirect: '/users',
+    failureRedirect: '/signup',
+    failureFlash : true
+}));
+
+app.post('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 
 
 //TESTING MONGOOSE
@@ -79,11 +96,51 @@ passport.use('local',new LocalStrategy(
     }
 ));
 
-/*app.post('/login',
-    passport.authenticate('local', { successRedirect: '/users',
-        failureRedirect: '/',
-        failureFlash: true })
-);*/
+passport.use('signup', new LocalStrategy({
+        passReqToCallback : true
+    },
+    function(req, username, password, done) {
+        console.log("Inside new user :" + username + " " + password);
+        findOrCreateUser = function(){
+            // find a user in Mongo with provided username
+            User.findOne({'username':username},function(err, user) {
+                // In case of any error return
+                if (err){
+                    console.log('Error in SignUp: '+err);
+                    return done(err);
+                }
+                // already exists
+                if (user) {
+                    console.log('User already exists');
+                    return done(null, false,
+                        req.flash('message','User Already Exists'));
+                } else {
+                    // if there is no user with that email
+                    // create the user
+                    var newUser = new User();
+                    // set the user's local credentials
+                    newUser.username = username;
+                    newUser.password = password;
+
+                    // save the user
+                    newUser.save(function(err) {
+                        if (err){
+                            console.log('Error in Saving user: '+err);
+                            throw err;
+                        }
+                        console.log('User Registration succesful');
+                        return done(null, newUser);
+                    });
+                }
+            });
+        };
+
+        // Delay the execution of findOrCreateUser and execute
+        // the method in the next tick of the event loop
+        process.nextTick(findOrCreateUser);
+    })
+);
+
 
 
 // catch 404 and forward to error handler
