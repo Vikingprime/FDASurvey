@@ -43,7 +43,7 @@ app.use('/signup',signup);
     res.send('SIGNUP');
 });*/
 
-// called via event - signup.js -> signup.ejs -> action="/newUser"
+// called via event: signup.js -> signup.ejs -> action="/newUser"
 app.post('/newUser', passport.authenticate('signup', {
     successRedirect: '/users',
     failureRedirect: '/signup',
