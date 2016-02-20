@@ -10,6 +10,10 @@ router.get('/', function(req, res, next) {
     //res.end("LoginPage!");
 });
 
-
+router.post('/newUser', passport.authenticate('signup', {
+    successRedirect: '/users',
+    failureRedirect: '/signup',
+    failureFlash : true
+}));
 
 module.exports = router;

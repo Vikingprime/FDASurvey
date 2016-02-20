@@ -5,13 +5,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport')
-    , LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var signup = require('./routes/signup');
 
 var app = express();
 
@@ -26,28 +19,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//setup Mongoose
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/mongooseDB');
+
+//passport setup
+var passport = require ('passport');
+var initPassport = require('./Authentication/auth');
+initPassport(passport);
+
 app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/signup',signup);
-/*app.get('/signup', function (req, res) {
-    res.send('SIGNUP');
-});*/
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/signup',require('./routes/signup'));
 
-app.post('/newUser', passport.authenticate('signup', {
-    successRedirect: '/users',
-    failureRedirect: '/signup',
-    failureFlash : true
-}));
 
 app.post('/logout', function(req, res) {
     req.logout();
@@ -57,6 +52,7 @@ app.post('/logout', function(req, res) {
 
 
 //TESTING MONGOOSE
+/*
 User = require('./models/usermodel');
 var myUser = undefined;
 User.find({username : "Sanjid"}, function(err, users) {
@@ -68,79 +64,14 @@ User.find({username : "Sanjid"}, function(err, users) {
 });
 console.log(myUser);
 
-// Passport session setup
-passport.serializeUser(function (user, done) {
-    done(null, user._id);
+surveys = require('./models/surveyListModel');
+surveys.find({username : "Sanjid"}, function(err, users) {
+    if (err) throw err;
+
+    // object of all the users
+    console.log("Logging all surveys: " + users);
 });
-
-passport.deserializeUser(function (id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
-});
-
-passport.use('local',new LocalStrategy(
-    function(username, password, done) {
-        console.log("inLocalStrategy with username "+ username.toString());
-        User.findOne({ username: username }, function (err, user) {
-            //console.log(user.toString());
-            if (err) { return done(err); }
-            if (!user) {
-                return done(null, false);
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false);
-            }
-            return done(null, user);
-        });
-    }
-));
-
-passport.use('signup', new LocalStrategy({
-        passReqToCallback : true
-    },
-    function(req, username, password, done) {
-        console.log("Inside new user :" + username + " " + password);
-        findOrCreateUser = function(){
-            // find a user in Mongo with provided username
-            User.findOne({'username':username},function(err, user) {
-                // In case of any error return
-                if (err){
-                    console.log('Error in SignUp: '+err);
-                    return done(err);
-                }
-                // already exists
-                if (user) {
-                    console.log('User already exists');
-                    return done(null, false,
-                        req.flash('message','User Already Exists'));
-                } else {
-                    // if there is no user with that email
-                    // create the user
-                    var newUser = new User();
-                    // set the user's local credentials
-                    newUser.username = username;
-                    newUser.password = password;
-
-                    // save the user
-                    newUser.save(function(err) {
-                        if (err){
-                            console.log('Error in Saving user: '+err);
-                            throw err;
-                        }
-                        console.log('User Registration succesful');
-                        return done(null, newUser);
-                    });
-                }
-            });
-        };
-
-        // Delay the execution of findOrCreateUser and execute
-        // the method in the next tick of the event loop
-        process.nextTick(findOrCreateUser);
-    })
-);
-
+*/
 
 
 // catch 404 and forward to error handler
