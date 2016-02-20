@@ -12,7 +12,6 @@ var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var signup = require('./routes/signup');
-var surveycreator = require('./routes/surveycreator');
 
 var app = express();
 
@@ -44,7 +43,6 @@ app.use('/signup',signup);
     res.send('SIGNUP');
 });*/
 
-// called via event: signup.js -> signup.ejs -> action="/newUser"
 app.post('/newUser', passport.authenticate('signup', {
     successRedirect: '/users',
     failureRedirect: '/signup',
@@ -54,10 +52,6 @@ app.post('/newUser', passport.authenticate('signup', {
 app.post('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
-});
-
-app.post('/newSurvey', function(req, res) {
-    
 });
 
 
