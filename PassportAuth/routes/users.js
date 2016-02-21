@@ -6,6 +6,7 @@ var surveys = require('../models/surveyListModel');
 router.get('/', function(req, res, next) {
   if(req.user){
     var myName = req.user.username;
+    console.log("The parameters are " + req.query.name);
     showSurveys(myName, function(data){
         res.render('users', { surveys: data, name:myName });
     } );
@@ -20,10 +21,8 @@ function showSurveys(username, cb){
         if (err) throw err;
         var str = [];
         for(var i = 0; i < users.length; i++){
-            console.log(users[i].name); // Object with id and time
             str[i] = users[i].name;
         }
-        console.log(str);
         cb(str);
     });
 }

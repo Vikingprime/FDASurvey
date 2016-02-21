@@ -50,30 +50,6 @@ app.post('/logout', function(req, res) {
 });
 
 
-
-//TESTING MONGOOSE
-/*
-User = require('./models/usermodel');
-var myUser = undefined;
-User.find({username : "Sanjid"}, function(err, users) {
-    if (err) throw err;
-
-    // object of all the users
-    console.log(users);
-    myUser = users;
-});
-console.log(myUser);
-
-surveys = require('./models/surveyListModel');
-surveys.find({username : "Sanjid"}, function(err, users) {
-    if (err) throw err;
-
-    // object of all the users
-    console.log("Logging all surveys: " + users);
-});
-*/
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
