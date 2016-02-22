@@ -10,12 +10,12 @@
     <p>You have the following surveys:</p>
     <ul>
         <% for(var i=0; i<surveys.length; i++) {%>
-        <% var link  = "/users?name="+ surveys[i].split(' ').join('+'); %>
+        <% var link  = "/renderSurvey?nm="+ surveys[i].split(' ').join('+'); %>
         <li> <a href=<%=link%>> <%= surveys[i] %> </a> </li>
         <% } %>
     </ul>
 
-    <form method="post" action="/users/newSurvey">
+    <form action="/newSurvey">
         <input type="submit" value="Create New Survey">
     </form>
 

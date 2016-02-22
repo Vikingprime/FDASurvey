@@ -37,11 +37,14 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, '/public')));
+app.use('/public',express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/signup',require('./routes/signup'));
+app.use('/renderSurvey',require('./routes/renderSurvey'));
+app.use('/newSurvey',require('./routes/newSurvey'));
 
 
 app.post('/logout', function(req, res) {

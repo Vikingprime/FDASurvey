@@ -6,7 +6,6 @@ var surveys = require('../models/surveyListModel');
 router.get('/', function(req, res, next) {
   if(req.user){
     var myName = req.user.username;
-    console.log("The parameters are " + req.query.name);
     showSurveys(myName, function(data){
         res.render('users', { surveys: data, name:myName });
     } );
