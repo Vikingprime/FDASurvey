@@ -20,10 +20,8 @@ function showSurveys(username, cb){
         if (err) throw err;
         var str = [];
         for(var i = 0; i < users.length; i++){
-            console.log(users[i].name); // Object with id and time
             str[i] = users[i].name;
         }
-        console.log(str);
         cb(str);
     });
 }

@@ -37,41 +37,20 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, '/public')));
+app.use('/public',express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/signup',require('./routes/signup'));
+app.use('/renderSurvey',require('./routes/renderSurvey'));
+app.use('/newSurvey',require('./routes/newSurvey'));
 
 
 app.post('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
-
-
-
-//TESTING MONGOOSE
-/*
-User = require('./models/usermodel');
-var myUser = undefined;
-User.find({username : "Sanjid"}, function(err, users) {
-    if (err) throw err;
-
-    // object of all the users
-    console.log(users);
-    myUser = users;
-});
-console.log(myUser);
-
-surveys = require('./models/surveyListModel');
-surveys.find({username : "Sanjid"}, function(err, users) {
-    if (err) throw err;
-
-    // object of all the users
-    console.log("Logging all surveys: " + users);
-});
-*/
 
 
 // catch 404 and forward to error handler
