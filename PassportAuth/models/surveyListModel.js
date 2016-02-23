@@ -8,7 +8,8 @@ var surveyList = new Schema ({
     id: Number,
     username: String,
     name: String,
-    questions: Object
+    questions: Object,
+    participants: {type:Array, default:[]}
 });
 
 

@@ -8,12 +8,16 @@
 <div class="login-middle">
     <p>Hello <%= name %></p>
     <p>You have the following surveys:</p>
-    <ul>
+    <table style="width:40%">
         <% for(var i=0; i<surveys.length; i++) {%>
         <% var link  = "/renderSurvey?nm="+ surveys[i].split(' ').join('+'); %>
-        <li> <a href=<%=link%>> <%= surveys[i] %> </a> </li>
+        <% var link2  = "/participants?nm="+ surveys[i].split(' ').join('+'); %>
+        <tr>
+          <td><a href=<%=link%>> <%= surveys[i] %> </a> </td>
+          <td>  <a href=<%=link2%>>  Manage Participants </a> </td>
+        </tr>
         <% } %>
-    </ul>
+    </table>
 
     <form action="/newSurvey">
         <input type="submit" value="Create New Survey">
