@@ -567,9 +567,9 @@
 
     Formbuilder.options = {
       BUTTON_CLASS: 'fb-button',
-      HTTP_ENDPOINT: '',
+      HTTP_ENDPOINT: '/newSurvey/updateSurvey',
       HTTP_METHOD: 'POST',
-      AUTOSAVE: true,
+      AUTOSAVE: false,
       CLEAR_FIELD_CONFIRM: false,
       mappings: {
         SIZE: 'field_options.size',

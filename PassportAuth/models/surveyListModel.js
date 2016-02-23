@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var surveyList = new Schema ({
     id: Number,
     username: String,
-    name: String
+    name: String,
+    questions: Object
 });
 
 
