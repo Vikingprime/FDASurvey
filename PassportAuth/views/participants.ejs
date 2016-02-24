@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Research Survey</title>
+</head>
+
+<body>
+<div class="login-middle">
+    <p> <%= name %> has the following participants:</p>
+    <ul style="width:40%">
+        <% for(var i=0; i<participants.length; i++) {%>
+        <li><%=participants[i]%></li>
+        <% } %>
+    </ul>
+
+    <form action="/participants/addParticipants">
+        <input type="text" name="participantEmail" placeholder="Add new participant email"> <br>
+        <input type="submit" value="Add Participant">
+    </form>
+
+    <form method="post" action="/logout">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
+</body>
