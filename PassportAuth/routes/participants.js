@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var surveys = require('../models/surveyListModel');
+var participants = require('../models/participantModel');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

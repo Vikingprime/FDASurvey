@@ -45,6 +45,7 @@ app.use('/users', require('./routes/users'));
 app.use('/signup',require('./routes/signup'));
 app.use('/renderSurvey',require('./routes/renderSurvey'));
 app.use('/participants',require('./routes/participants'));
+app.use('/api',require('./routes/api'));
 
 
 app.post('/logout', function(req, res) {
