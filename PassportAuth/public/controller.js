@@ -1,25 +1,8 @@
-var myApp = angular.module('myApp', []);/*.
-config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $routeProvider.
-    when('/renderSurvey/:nm', {
-        templateUrl: '/Survey',
-        controller: 'AppCtrl'
-    }).
-    otherwise({
-        redirectTo: '/users'
-    });
-    $locationProvider.html5Mode(true);
-}]);
-*/
+var myApp = angular.module('myApp', []);
 
 myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     console.log("Hello World from controller");
     $scope.params=null;
-/*    $scope.init = function(parameter){
-        $scope.params = parameter;
-        console.log("Parameter = " + parameter);
-        console.log("Trying to get params: " + $scope.params);
-    };*/
 
     populate = function() {
         $http.get('/renderSurvey/formData')
@@ -50,12 +33,19 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
                 'id' :$scope.id
             })
             .then(
-                function(){
-                    publish();
+                function(response){
+/*                    if (response){
+                        populate();
+                    }*/
                     console.log("Success sending data to server")
                 },
                 function(){console.log("fail sending data to server")});
         //alert("You are about to save "+ surveyName );
+    }
+
+    $scope.publish = function(){
+        $scope.notEnabled=true;
+        $scope.saveSurvey();
     }
 
 

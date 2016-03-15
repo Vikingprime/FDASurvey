@@ -35,5 +35,13 @@ router.get('/formData', function (req, res){
 router.post('/saveSurvey', function(req,res){
     console.log("in body");
     console.log(req.body);
+    surveys.update({_id:req.body.id}, { $set: {
+        questions: req.body.questions,
+        editable: req.body.editable,
+        name: req.body.name
+    }}, {}, function(err, numAffected){
+        console.log("Updated and Num Affected " + numAffected);
+        res.send(err);
+    })
 });
 module.exports = router;
