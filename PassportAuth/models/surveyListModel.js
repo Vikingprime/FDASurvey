@@ -9,6 +9,7 @@ var surveyList = new Schema ({
     username: String,
     name: String,
     questions: Object,
+    editable: Boolean,
     participants: {type:Array, default:[]}
 });
 

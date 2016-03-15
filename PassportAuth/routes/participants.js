@@ -21,6 +21,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/addParticipants', function (req,res,next){
+    console.log(req.query.participantEmail);
     res.end("Not done yet");
 } )
 

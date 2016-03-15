@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Builder</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+</head>
+<body>
+
+<div class="container" ng-controller="AppCtrl" >
+    <h1>Survey Creator</h1>
+    <div>
+        <label>Enter/Edit Name of Survey</label>
+        <input type="text" class="form-control"  placeholder="Name of Survey" ng-model=surveyName>
+    </div>
+    <br>
+
+    <table class="table">
+        <tr ng-repeat="question in questions">
+            <td>{{question.prompt}}</td>
+            <td>
+                <button type="button" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <label>Add new Question</label>
+    <input type="text" class="form-control" name="" ng-model="newQuestion" placeholder="Enter Question">
+    <br>
+
+    <button class="btn btn-primary" ng-click="addQuestion(newQuestion)" ng-disabled = notEnabled>Add Question</button>
+    <button class="btn btn-primary" ng-click="saveSurvey()">Save Survey</button>
+    <button class="btn btn-primary" ng-click="submit()">Publish Survey</button>
+
+
+</div>
+
+
+
+<div class="FormElements"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src = "../public/controller.js"></script>
+</body>
+</html>
