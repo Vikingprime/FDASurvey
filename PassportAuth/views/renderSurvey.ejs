@@ -27,24 +27,67 @@
 
     <table class="table">
         <tr ng-repeat="question in questions">
-            <td>{{question.prompt}}</td>
-            <td>
+
+            <td ng-if = "question.type== 'Txt'">{{question.prompt + ':\t\tTxt'}}</td>
+            <td ng-if = "question.type== 'Num'">{{question.prompt + ':\t\tNum'}}</td>
+            <td ng-if = "question.type== 'Mc'">{{question.prompt + ':\t\tMc'}}<br>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="option in question.options">
+                        <label>{{option}}
+                            <input type="radio" name="name" value="{{option}}" required />
+                        </label>
+                    </li>
+                </ul>
+            </td>
+            <td class="text-center">
                 <button type="button" class="btn btn-default" aria-label="Left Align">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </button>
             </td>
-            <td>
+            <td class="text-center">
                 <button type="button" class="btn btn-default" aria-label="Left Align">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
             </td>
         </tr>
     </table>
+
+    <!-- This is commented out for now
     <label>Add new Question</label>
     <input type="text" class="form-control" name="" ng-model="newQuestion" placeholder="Enter Question">
     <br>
+    -->
+    <span class="label label-pill label-info">Select type of question to add</span>
+    <select ng-model="questionType">
+        <option value="Num">Number input</option>
+        <option value="Txt">Text input</option>
+        <option value="Mc">Multiple Choice</option>
+    </select>
 
-    <button class="btn btn-primary" ng-click="addQuestion(newQuestion)" ng-disabled = notEnabled>Add Question</button>
+    <div ng-if="questionType=='Num'">
+        <input type="text" class="form-control" name="" ng-model="$parent.newQuestion" placeholder="Enter Question">
+        <br>
+    </div>
+
+    <div ng-if="questionType=='Txt'">
+        <input type="text" class="form-control" name="" ng-model="$parent.newQuestion" placeholder="Enter Question">
+        <br>
+    </div>
+    <br>
+
+    <div ng-if="questionType=='Mc'">
+        <input type="text" class="form-control" name="" ng-model="$parent.newQuestion" placeholder="Enter Prompt">
+        <br>
+
+        <div class="col-xs-3" ng-repeat="i in newOptions">
+            <input class="form-control" ng-model="mcqPrompts[i]" type="text" placeholder="Add new option"><br>
+        </div>
+        <button class = "btn btn-primary" ng-click="newMcOption()">Add Option</button>
+    </div>
+    <br>
+
+
+    <button class="btn btn-primary" ng-click="addQuestion()" ng-disabled = notEnabled>Add Question</button>
     <button class="btn btn-primary" ng-click="saveSurvey()">Save Survey</button>
     <button class="btn btn-primary" ng-click="publish()">Publish Survey</button>
 

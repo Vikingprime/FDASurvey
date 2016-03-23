@@ -17,12 +17,41 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
                 function(){console.log("Failed to get data")});
     }
     ;
-    populate();
+    //populate();
 
-    $scope.addQuestion = function(newQuestion) {
-        var newItemNo = $scope.questions.length+1;
-        $scope.questions.push({prompt: newQuestion});
+    //DEBUGGING********////
+    var questions = [{type:"Num",prompt: "Tada",option:[]},
+        {type:"Mc",prompt:"Tada2",options:["Yolo2","Swag2"]}
+    ];
+    $scope.questions = questions;
+
+    //for adding multiple choice and checkbox options
+    $scope.newOptions = [];
+    $scope.mcqPrompts=[];
+
+    //ng-model values for adding new quesitons
+    $scope.questionType = "";
+    $scope.newQuestion = "";
+
+    $scope.newMcOption= function(){
+        $scope.newOptions.push($scope.newOptions.length);
+        console.log("MCQ PROMPTS:" + $scope.mcqPrompts);
+        console.log($scope.questionType);
+        console.log($scope.newQuestion);
+    };
+
+    $scope.addQuestion = function() {
+        $scope.questions.push({type:$scope.questionType,
+            prompt: $scope.newQuestion,
+            options: $scope.mcqPrompts});
         console.log($scope.questions);
+
+        //reset Add Question values;
+        $scope.newOptions = [];
+        $scope.mcqPrompts=[];
+        $scope.questionType = "";
+        $scope.newQuestion = "";
+
     };
 
     $scope.saveSurvey = function(){

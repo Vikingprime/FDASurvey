@@ -11,9 +11,10 @@ router.get('/', function(req, res, next) {
     if(req.user){
         var myName= req.user.username;
         var surveyName = req.query.nm;
+        var surveyId = req.query.id;
+        console.log("Id of survey" + surveyId);
         findParticipants(myName, surveyName, function(data){
-            console.log("participants = " + data);
-            res.render('participants', { participants: data, name:surveyName });
+            res.render('participants', { participants: data, name:surveyName, surveyID:surveyId });
         } );
     }
     else {
@@ -21,8 +22,10 @@ router.get('/', function(req, res, next) {
     };
 });
 
-router.get('/addParticipants', function (req,res,next){
+router.post('/addParticipants', function (req,res,next){
+    console.log("Id= " +req.query.id);
     console.log(req.query.participantEmail);
+    participants.update({email:req.query.participantEmail},{$push:{}})
     res.end("Not done yet");
 } )
 

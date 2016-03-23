@@ -16,7 +16,7 @@
     <table class="table">
         <% for(var i=0; i<surveys.length; i++) {%>
         <% var link  = "/renderSurvey?nm="+ surveys[i].split(' ').join('+'); %>
-        <% var link2  = "/participants?nm="+ surveys[i].split(' ').join('+'); %>
+        <% var link2  = "/participants?nm="+ surveys[i].split(' ').join('+')  + "&id=" +id[i]; %>
         <tr>
           <td><a href=<%=link%>> <%= surveys[i] %> </a> </td>
           <td>  <a href=<%=link2%>>  Manage Participants </a> </td>
