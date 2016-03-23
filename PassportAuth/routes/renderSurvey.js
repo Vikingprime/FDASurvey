@@ -36,8 +36,9 @@ router.get('/formData', function (req, res){
         res.json(myObj);
     }
     else{
-        surveys.findOne({name: query}, function (err, survey) {
+        surveys.findOne({name: query, username:req.user.username}, function (err, survey) {
             var myObj = {};
+            console.log("Logging username:" + req.user);
             myObj.questions = survey.questions;
             myObj.editable = survey.editable;
             myObj.name = survey.name;

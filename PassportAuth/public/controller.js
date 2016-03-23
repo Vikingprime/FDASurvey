@@ -8,7 +8,8 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
         $http.get('/renderSurvey/formData')
             .then(
                 function(response){
-                    console.log("Success getting data");
+                    console.log("Success getting data. Questions are:" );
+                    console.log(response.data.questions[3]);
                     $scope.questions = response.data.questions;
                     $scope.notEnabled = !response.data.editable;
                     $scope.surveyName =response.data.name;
@@ -17,13 +18,13 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
                 function(){console.log("Failed to get data")});
     }
     ;
-    //populate();
+    populate();
 
     //DEBUGGING********////
-    var questions = [{type:"Num",prompt: "Tada",option:[]},
+/*    var questions = [{type:"Num",prompt: "Tada",option:[]},
         {type:"Mc",prompt:"Tada2",options:["Yolo2","Swag2"]}
     ];
-    $scope.questions = questions;
+    $scope.questions = questions;*/
 
     //for adding multiple choice and checkbox options
     $scope.newOptions = [];
