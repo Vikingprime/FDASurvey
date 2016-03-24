@@ -5,6 +5,8 @@ var express   = require('express');
 var router = express.Router();
 
 router.get('/getSurvey', function(req, res, next) {
+	
+	
     var x = { questions:
    [ { prompt: 'how smelly are you?' },
      { prompt: 'how fat are you?' },
